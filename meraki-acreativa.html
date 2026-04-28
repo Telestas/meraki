@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meraki Acreativa</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --bg2: #0f0f1a;
+    --card: #13131f;
+    --card2: #1a1a2e;
+    --purple: #7c3aed;
+    --purple-light: #a855f7;
+    --purple-glow: rgba(124, 58, 237, 0.3);
+    --white: #f0f0f8;
+    --gray: #8888aa;
+    --border: rgba(124, 58, 237, 0.2);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--white);
+    font-family: 'Syne', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 24px;
+    background: rgba(10,10,15,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 3px;
+    background: linear-gradient(135deg, #fff 40%, var(--purple-light));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .hamburger {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+  }
+  .hamburger span {
+    display: block;
+    width: 26px; height: 2px;
+    background: var(--white);
+    border-radius: 2px;
+    transition: 0.3s;
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 120px 24px 60px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -100px; left: -100px;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(124,58,237,0.15) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--purple-light);
+    margin-bottom: 20px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+  }
+  .hero-tag::before {
+    content: '';
+    width: 24px; height: 1px;
+    background: var(--purple-light);
+  }
+
+  .hero h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(60px, 18vw, 90px);
+    line-height: 0.95;
+    letter-spacing: 1px;
+    margin-bottom: 24px;
+  }
+
+  .hero h1 .line-white { color: var(--white); }
+  .hero h1 .line-purple { color: var(--purple-light); }
+  .hero h1 .line-outline {
+    -webkit-text-stroke: 2px var(--white);
+    color: transparent;
+  }
+
+  .hero-desc {
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--gray);
+    max-width: 340px;
+    margin-bottom: 36px;
+  }
+
+  .hero-desc a, .hero-desc span.accent {
+    color: var(--purple-light);
+    text-decoration: none;
+  }
+
+  .btn-primary {
+    display: inline-block;
+    background: var(--purple);
+    color: #fff;
+    padding: 16px 32px;
+    font-family: 'Syne', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.3s;
+    clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+  }
+
+  .btn-primary:hover {
+    background: var(--purple-light);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px var(--purple-glow);
+  }
+
+  .btn-ghost {
+    display: inline-block;
+    color: var(--white);
+    padding: 16px 0;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+    margin-top: 16px;
+    transition: all 0.3s;
+  }
+  .btn-ghost:hover { border-color: var(--purple-light); color: var(--purple-light); }
+
+  .hero-cta { display: flex; flex-direction: column; align-items: flex-start; gap: 0; }
+
+  /* QUICK FEATURES */
+  .quick-features {
+    padding: 0 24px 60px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .qf-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 18px 20px;
+    background: var(--card);
+    border-left: 3px solid var(--purple);
+    border-radius: 0 8px 8px 0;
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: opacity 0.5s, transform 0.5s;
+  }
+
+  .qf-item.visible { opacity: 1; transform: none; }
+
+  .qf-icon {
+    font-size: 24px;
+    min-width: 36px;
+    text-align: center;
+  }
+
+  .qf-item h3 {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 2px;
+    color: var(--white);
+  }
+
+  .qf-item p {
+    font-size: 12px;
+    color: var(--gray);
+    font-family: 'Inter', sans-serif;
+    line-height: 1.4;
+  }
+
+  /* STATS */
+  .stats {
+    padding: 60px 24px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+  }
+
+  .stat-box {
+    background: var(--bg2);
+    padding: 32px 20px;
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 56px;
+    color: var(--purple-light);
+    line-height: 1;
+    display: block;
+  }
+
+  .stat-label {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gray);
+    font-family: 'Inter', sans-serif;
+    margin-top: 8px;
+    display: block;
+  }
+
+  .stat-box.featured {
+    position: relative;
+    overflow: hidden;
+  }
+  .stat-box.featured::after {
+    content: '💀';
+    position: absolute;
+    bottom: 10px; right: 10px;
+    font-size: 28px;
+    opacity: 0.3;
+  }
+
+  /* SECTION HEADER */
+  .section-header {
+    padding: 70px 24px 30px;
+  }
+
+  .section-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--purple-light);
+    margin-bottom: 16px;
+    font-family: 'Inter', sans-serif;
+  }
+  .section-tag::before {
+    content: '';
+    width: 30px; height: 1px;
+    background: var(--purple-light);
+  }
+
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(48px, 14vw, 72px);
+    line-height: 0.95;
+    letter-spacing: 1px;
+  }
+
+  .section-title .wh { color: var(--white); }
+  .section-title .pr { color: var(--purple-light); }
+
+  .section-desc {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--gray);
+    margin-top: 20px;
+    max-width: 380px;
+  }
+
+  /* SERVICES */
+  .services {
+    padding: 0 24px 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .service-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s, transform 0.3s;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s, transform 0.5s, border-color 0.3s;
+  }
+
+  .service-card.visible { opacity: 1; transform: none; }
+
+  .service-card:hover {
+    border-color: var(--purple);
+    transform: translateY(-4px);
+  }
+
+  .service-card::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 80px; height: 80px;
+    background: radial-gradient(circle at top right, rgba(124,58,237,0.2), transparent 70%);
+  }
+
+  .service-icon-wrap {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .service-icon {
+    width: 48px; height: 48px;
+    background: var(--card2);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    border: 1px solid var(--border);
+  }
+
+  .service-card h3 {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--white);
+  }
+
+  .service-card p {
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    color: var(--gray);
+    line-height: 1.6;
+  }
+
+  /* PROCESS */
+  .process-section {
+    padding: 30px 24px 60px;
+  }
+
+  .process-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin-top: 30px;
+  }
+
+  .process-step {
+    display: flex;
+    gap: 20px;
+    position: relative;
+    padding-bottom: 32px;
+  }
+
+  .process-step:last-child { padding-bottom: 0; }
+
+  .step-left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 40px;
+  }
+
+  .step-num {
+    width: 40px; height: 40px;
+    background: var(--purple);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    color: white;
+    flex-shrink: 0;
+  }
+
+  .step-line {
+    width: 1px;
+    flex: 1;
+    background: var(--border);
+    margin-top: 8px;
+  }
+
+  .step-content { padding-top: 8px; }
+  .step-content h3 {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .step-content p {
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    color: var(--gray);
+    line-height: 1.5;
+  }
+
+  /* CLIENTS */
+  .clients-section { padding: 70px 24px 30px; }
+
+  .client-card {
+    background: var(--card2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 16px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s, transform 0.5s;
+  }
+
+  .client-card.visible { opacity: 1; transform: none; }
+
+  .client-video {
+    background: linear-gradient(135deg, #1a0a2e, #0f0f2e);
+    height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 12px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .client-video::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, rgba(124,58,237,0.2), transparent 60%);
+  }
+
+  .play-btn {
+    width: 56px; height: 56px;
+    background: var(--purple);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    z-index: 1;
+    box-shadow: 0 0 30px var(--purple-glow);
+  }
+
+  .play-btn:hover {
+    background: var(--purple-light);
+    transform: scale(1.1);
+  }
+
+  .play-btn::after {
+    content: '▶';
+    font-size: 18px;
+    color: white;
+    margin-left: 3px;
+  }
+
+  .video-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gray);
+    z-index: 1;
+  }
+
+  .client-info { padding: 20px; }
+
+  .client-name {
+    font-size: 20px;
+    font-weight: 800;
+    margin-bottom: 4px;
+  }
+
+  .client-handle {
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    color: var(--purple-light);
+    margin-bottom: 16px;
+  }
+
+  .client-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  .cstat {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px;
+    text-align: center;
+  }
+
+  .cstat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    color: var(--purple-light);
+    display: block;
+    line-height: 1;
+  }
+
+  .cstat-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--gray);
+    margin-top: 4px;
+    display: block;
+  }
+
+  .client-quote {
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--gray);
+    font-style: italic;
+    border-left: 2px solid var(--purple);
+    padding-left: 14px;
+  }
+
+  /* CTA FINAL */
+  .cta-section {
+    margin: 40px 24px 80px;
+    background: linear-gradient(135deg, #1a0a2e 0%, #0f0f2e 50%, #1a0a2e 100%);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 48px 24px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-section::before {
+    content: '';
+    position: absolute;
+    top: -60px; left: 50%;
+    transform: translateX(-50%);
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(124,58,237,0.25), transparent 70%);
+    pointer-events: none;
+  }
+
+  .cta-section h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(40px, 12vw, 64px);
+    line-height: 1;
+    margin-bottom: 16px;
+    position: relative;
+  }
+
+  .cta-section p {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    color: var(--gray);
+    line-height: 1.7;
+    margin-bottom: 32px;
+    position: relative;
+  }
+
+  /* WHATSAPP FLOAT */
+  .wa-float {
+    position: fixed;
+    bottom: 24px; right: 24px;
+    width: 56px; height: 56px;
+    background: #25d366;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+    z-index: 200;
+    transition: all 0.3s;
+    text-decoration: none;
+    font-size: 26px;
+  }
+
+  .wa-float:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 30px rgba(37,211,102,0.5);
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: none; }
+  }
+
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 20px var(--purple-glow); }
+    50% { box-shadow: 0 0 40px rgba(124,58,237,0.5); }
+  }
+
+  .hero h1 { animation: fadeInUp 0.8s ease both; }
+  .hero-desc { animation: fadeInUp 0.8s ease 0.2s both; }
+  .hero-cta { animation: fadeInUp 0.8s ease 0.4s both; }
+
+  .play-btn { animation: pulse 2.5s ease infinite; }
+
+  /* DIVIDER */
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin: 0 24px;
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 40px 24px;
+    text-align: center;
+    border-top: 1px solid var(--border);
+  }
+
+  footer .logo { display: block; margin-bottom: 12px; font-size: 32px; }
+
+  footer p {
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    color: var(--gray);
+  }
+
+  /* MENU OVERLAY */
+  .menu-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(10,10,15,0.97);
+    z-index: 150;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+  }
+
+  .menu-overlay.open {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .menu-overlay a {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 48px;
+    color: var(--white);
+    text-decoration: none;
+    letter-spacing: 4px;
+    transition: color 0.3s;
+  }
+
+  .menu-overlay a:hover { color: var(--purple-light); }
+
+  .menu-close {
+    position: absolute;
+    top: 24px; right: 24px;
+    font-size: 32px;
+    cursor: pointer;
+    color: var(--white);
+    background: none;
+    border: none;
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--purple); border-radius: 2px; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">MERAKI</div>
+  <div class="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- MENU OVERLAY -->
+<div class="menu-overlay" id="menuOverlay">
+  <button class="menu-close" onclick="toggleMenu()">✕</button>
+  <a href="#hero" onclick="toggleMenu()">Inicio</a>
+  <a href="#servicios" onclick="toggleMenu()">Servicios</a>
+  <a href="#clientes" onclick="toggleMenu()">Clientes</a>
+  <a href="#contacto" onclick="toggleMenu()">Contacto</a>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-tag">Agencia creativa</div>
+  <h1>
+    <span class="line-white">MARCAS</span><br>
+    <span class="line-purple">PERSONALES</span><br>
+    <span class="line-outline">DESDE CERO</span>
+  </h1>
+  <p class="hero-desc">
+    Nos especializamos en <span class="accent">crear marcas personales desde cero</span>, construir comunidades reales y generar <span class="accent">resultados con impacto</span>. Sin fórmulas genéricas. Solo estrategia con alma.
+  </p>
+  <div class="hero-cta">
+    <a href="#contacto" class="btn-primary">DESCUBRE TU NIVEL</a>
+    <a href="#clientes" class="btn-ghost">VER CLIENTES</a>
+  </div>
+</section>
+
+<!-- QUICK FEATURES -->
+<div class="quick-features">
+  <div class="qf-item">
+    <div class="qf-icon">🚀</div>
+    <div>
+      <h3>Marca Personal desde Cero</h3>
+      <p>Construimos tu identidad, voz y posicionamiento desde el primer día</p>
+    </div>
+  </div>
+  <div class="qf-item">
+    <div class="qf-icon">👥</div>
+    <div>
+      <h3>Comunidad Real</h3>
+      <p>Estrategias para crecer seguidores que compran, confían y recomiendan</p>
+    </div>
+  </div>
+  <div class="qf-item">
+    <div class="qf-icon">📈</div>
+    <div>
+      <h3>Resultados con Impacto</h3>
+      <p>Todo se mide: alcance, engagement, ventas. Creamos para que mueva la aguja</p>
+    </div>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat-box">
+    <span class="stat-num">5+</span>
+    <span class="stat-label">Clientes Activos</span>
+  </div>
+  <div class="stat-box">
+    <span class="stat-num">50+</span>
+    <span class="stat-label">Proyectos Entregados</span>
+  </div>
+  <div class="stat-box">
+    <span class="stat-num">3+</span>
+    <span class="stat-label">Años de Experiencia</span>
+  </div>
+  <div class="stat-box featured">
+    <span class="stat-num">∞</span>
+    <span class="stat-label">Ideas Sin Límites</span>
+  </div>
+</div>
+
+<!-- SERVICIOS -->
+<div class="section-header" id="servicios">
+  <div class="section-tag">Lo que hacemos</div>
+  <h2 class="section-title">
+    <span class="wh">NUESTROS</span><br>
+    <span class="pr">SERVICIOS</span>
+  </h2>
+  <p class="section-desc">Desde construir tu marca personal desde cero hasta escalarla con contenido viral y estrategia real. Todo lo que necesitas para triunfar en redes.</p>
+</div>
+
+<div class="services">
+  <div class="service-card">
+    <div class="service-icon-wrap">
+      <div class="service-icon">🚀</div>
+      <h3>Marca Personal desde Cero</h3>
+    </div>
+    <p>Construimos tu identidad, voz y posicionamiento desde el primer día. Tu marca que conecta y convierte.</p>
+  </div>
+
+  <div class="service-card">
+    <div class="service-icon-wrap">
+      <div class="service-icon">👥</div>
+      <h3>Comunidad Real</h3>
+    </div>
+    <p>Estrategias para crecer seguidores que compran, confían y recomiendan. No vanity metrics, resultados reales.</p>
+  </div>
+
+  <div class="service-card">
+    <div class="service-icon-wrap">
+      <div class="service-icon">✍️</div>
+      <h3>Copywriting Creativo</h3>
+    </div>
+    <p>Textos que venden sin sonar a venta. Hooks, captions y guiones que impactan desde la primera línea y generan conversión.</p>
+  </div>
+
+  <div class="service-card">
+    <div class="service-icon-wrap">
+      <div class="service-icon">📊</div>
+      <h3>Consultoría & Resultados</h3>
+    </div>
+    <p>Analizamos tu negocio, competencia y audiencia. Plan de acción concreto con métricas reales para que cada peso invertido cuente.</p>
+  </div>
+</div>
+
+<!-- PROCESS -->
+<div class="process-section">
+  <div class="section-tag">Cómo lo hacemos</div>
+  <h2 class="section-title" style="font-size: 40px;">
+    <span class="wh">EL</span> <span class="pr">PROCESO</span>
+  </h2>
+  <div class="process-steps">
+    <div class="process-step">
+      <div class="step-left">
+        <div class="step-num">1</div>
+        <div class="step-line"></div>
+      </div>
+      <div class="step-content">
+        <h3>Diagnóstico</h3>
+        <p>Entendemos tu marca, tu audiencia y tus objetivos para diseñar la estrategia perfecta.</p>
+      </div>
+    </div>
+    <div class="process-step">
+      <div class="step-left">
+        <div class="step-num">2</div>
+        <div class="step-line"></div>
+      </div>
+      <div class="step-content">
+        <h3>Estrategia</h3>
+        <p>Diseñamos un plan de acción personalizado con métricas claras y pasos concretos.</p>
+      </div>
+    </div>
+    <div class="process-step">
+      <div class="step-left">
+        <div class="step-num">3</div>
+        <div class="step-line"></div>
+      </div>
+      <div class="step-content">
+        <h3>Creación</h3>
+        <p>Producimos contenido con calidad, creatividad y precisión estratégica que impacta.</p>
+      </div>
+    </div>
+    <div class="process-step">
+      <div class="step-left">
+        <div class="step-num">4</div>
+      </div>
+      <div class="step-content">
+        <h3>Resultados</h3>
+        <p>Medimos, optimizamos y seguimos creciendo contigo cada mes sin parar.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CLIENTS -->
+<div class="clients-section" id="clientes">
+  <div class="section-tag">Lo que logramos</div>
+  <h2 class="section-title">
+    <span class="wh">CLIENTES &</span><br>
+    <span class="pr">RESULTADOS</span>
+  </h2>
+  <p class="section-desc" style="margin-bottom: 32px;">Esto no son promesas. Son resultados reales de marcas reales que confiaron en Meraki Acreativa.</p>
+
+  <div class="client-card">
+    <div class="client-video">
+      <div class="play-btn"></div>
+      <span class="video-label">Yaquelin — Testimonio</span>
+    </div>
+    <div class="client-info">
+      <div class="client-name">Yaquelin</div>
+      <div class="client-handle">@yaquelin_oficial</div>
+      <div class="client-stats">
+        <div class="cstat">
+          <span class="cstat-num">8K+</span>
+          <span class="cstat-label">Seguidores</span>
+        </div>
+        <div class="cstat">
+          <span class="cstat-num">90K</span>
+          <span class="cstat-label">Alcance/Mes</span>
+        </div>
+      </div>
+      <p class="client-quote">"Meraki transformó mi imagen completamente. Ahora mi marca habla sola."</p>
+    </div>
+  </div>
+
+  <div class="client-card">
+    <div class="client-video">
+      <div class="play-btn"></div>
+      <span class="video-label">Stylos Boutique — Testimonio</span>
+    </div>
+    <div class="client-info">
+      <div class="client-name">Stylos Boutique</div>
+      <div class="client-handle">@stylos.boutique</div>
+      <div class="client-stats">
+        <div class="cstat">
+          <span class="cstat-num">15K+</span>
+          <span class="cstat-label">Seguidores</span>
+        </div>
+        <div class="cstat">
+          <span class="cstat-num">250K</span>
+          <span class="cstat-label">Alcance/Mes</span>
+        </div>
+      </div>
+      <p class="client-quote">"Los factos se convirtieron en el contenido más viral que hemos tenido."</p>
+    </div>
+  </div>
+
+  <div class="client-card">
+    <div class="client-video" style="background: linear-gradient(135deg, #0a2010, #0f2010);">
+      <div class="play-btn" style="background: #25a244;"></div>
+      <span class="video-label">Cliente Premium — Testimonio</span>
+    </div>
+    <div class="client-info">
+      <div class="client-name">Entienden la realidad</div>
+      <div class="client-handle">@cliente_premium</div>
+      <div class="client-stats">
+        <div class="cstat">
+          <span class="cstat-num">20K+</span>
+          <span class="cstat-label">Seguidores</span>
+        </div>
+        <div class="cstat">
+          <span class="cstat-num">400K</span>
+          <span class="cstat-label">Alcance/Mes</span>
+        </div>
+      </div>
+      <p class="client-quote">"Entienden la realidad cubana y crean contenido que realmente funciona aquí."</p>
+    </div>
+  </div>
+</div>
+
+<!-- CTA FINAL -->
+<div class="cta-section" id="contacto">
+  <h2>
+    <span style="color: var(--white)">¿LISTO PARA</span><br>
+    <span style="color: var(--purple-light)">CRECER?</span>
+  </h2>
+  <p>Da el primer paso hacia una marca personal que genera resultados reales. Hablemos de tu proyecto.</p>
+  <a href="https://wa.me/1234567890" class="btn-primary">EMPEZAR AHORA →</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <span class="logo">MERAKI</span>
+  <p>© 2026 Meraki Acreativa. Todos los derechos reservados.</p>
+  <p style="margin-top: 8px;">Estrategia con alma. Resultados reales.</p>
+</footer>
+
+<!-- WHATSAPP FLOAT -->
+<a href="https://wa.me/1234567890" class="wa-float" title="WhatsApp">💬</a>
+
+<script>
+  // Menu toggle
+  function toggleMenu() {
+    document.getElementById('menuOverlay').classList.toggle('open');
+  }
+
+  // Intersection Observer for scroll animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          entry.target.classList.add('visible');
+        }, entry.target.dataset.delay || 0);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  // Animate quick feature items with stagger
+  document.querySelectorAll('.qf-item').forEach((el, i) => {
+    el.dataset.delay = i * 120;
+    observer.observe(el);
+  });
+
+  // Animate service cards with stagger
+  document.querySelectorAll('.service-card').forEach((el, i) => {
+    el.dataset.delay = i * 100;
+    observer.observe(el);
+  });
+
+  // Animate client cards
+  document.querySelectorAll('.client-card').forEach((el, i) => {
+    el.dataset.delay = i * 150;
+    observer.observe(el);
+  });
+
+  // Animated counters
+  function animateCounter(el, target, suffix = '') {
+    let start = 0;
+    const dur = 1500;
+    const step = target / (dur / 16);
+    const update = () => {
+      start = Math.min(start + step, target);
+      el.textContent = Math.floor(start) + suffix;
+      if (start < target) requestAnimationFrame(update);
+    };
+    update();
+  }
+
+  const statsObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const nums = entry.target.querySelectorAll('.stat-num');
+        nums.forEach(num => {
+          const text = num.textContent;
+          if (text === '5+') animateCounter(num, 5, '+');
+          else if (text === '50+') animateCounter(num, 50, '+');
+          else if (text === '3+') animateCounter(num, 3, '+');
+        });
+        statsObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.5 });
+
+  const statsEl = document.querySelector('.stats');
+  if (statsEl) statsObserver.observe(statsEl);
+
+  // Close menu on escape
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') document.getElementById('menuOverlay').classList.remove('open');
+  });
+</script>
+</body>
+</html>
