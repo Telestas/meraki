@@ -2,8 +2,15 @@ const nav=document.getElementById('nav')
 const burger=document.getElementById('burger')
 const navLinks=document.getElementById('navLinks')
 const revealItems=document.querySelectorAll('.reveal')
+let navStuck=false
+let scrollTicking=false
 
-function updateNav(){nav.classList.toggle('stuck',window.scrollY>40)}
+function updateNav(){
+  const shouldStick=window.scrollY>40
+  if(shouldStick===navStuck)return
+  navStuck=shouldStick
+  nav.classList.toggle('stuck',shouldStick)
+}
 function setMenu(open){
   burger.classList.toggle('open',open)
   navLinks.classList.toggle('open',open)
@@ -13,7 +20,14 @@ function setMenu(open){
 function toggleMenu(){setMenu(!navLinks.classList.contains('open'))}
 function closeMenu(){setMenu(false)}
 
-window.addEventListener('scroll',updateNav,{passive:true})
+window.addEventListener('scroll',()=>{
+  if(scrollTicking)return
+  scrollTicking=true
+  requestAnimationFrame(()=>{
+    updateNav()
+    scrollTicking=false
+  })
+},{passive:true})
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMenu()})
 updateNav()
 
@@ -65,7 +79,7 @@ function showRes(){
   document.getElementById('rLevel').textContent=level
   document.getElementById('rText').textContent=text
   document.getElementById('rSummary').innerHTML=`<div class="sum-row"><span class="sum-l">Presencia</span><span class="sum-v">${(txt[0]||'').substring(0,36)}</span></div><div class="sum-row"><span class="sum-l">Audiencia</span><span class="sum-v">${(txt[1]||'').substring(0,36)}</span></div><div class="sum-row"><span class="sum-l">Contenido</span><span class="sum-v">${(txt[2]||'').substring(0,36)}</span></div><div class="sum-row"><span class="sum-l">Obstáculo</span><span class="sum-v">${(txt[4]||'').substring(0,36)}</span></div>`
-  document.getElementById('waBtn').href=`https://wa.me/5300000000?text=${msg}`
+  document.getElementById('waBtn').href=`https://wa.me/5363284262?text=${msg}`
   steps[4].classList.remove('active')
   document.getElementById('qRes').classList.add('show')
   setProgress(100)
