@@ -150,7 +150,11 @@ main:focus{outline:none}
 #clientes{background:var(--deep)}
 .clients-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:56px}
 @media(max-width:900px){.clients-grid{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:500px){.clients-grid{grid-template-columns:1fr}}
+@media(max-width:600px){
+  .clients-grid{display:flex;overflow-x:scroll;scroll-snap-type:x mandatory;overscroll-behavior-x:contain;scrollbar-width:none;gap:14px;padding:0 20px 20px;margin-left:-20px;margin-right:-20px;margin-top:56px;scroll-padding-left:20px}
+  .clients-grid::-webkit-scrollbar{display:none}
+  .client-card{flex:0 0 78vw;scroll-snap-align:start}
+}
 .client-card{display:block;background:var(--black);border:1px solid var(--purple-border);overflow:hidden;transition:transform .3s,border-color .3s}
 .client-card:hover{border-color:var(--purple);transform:translateY(-4px)}
 .vid-wrap{position:relative;width:100%;padding-top:56.25%;background:linear-gradient(135deg,#140025,#0b0b14);overflow:hidden}

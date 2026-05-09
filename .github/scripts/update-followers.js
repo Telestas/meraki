@@ -32,8 +32,8 @@ const TOKEN = process.env.INSTAGRAM_TOKEN
 
 const ACCOUNTS = [
   { handle: 'reystone_oficial', igUserId: process.env.IG_ID_REYSTONE },
-  { handle: 'stylos.boutique',  igUserId: process.env.IG_ID_STYLOS   },
-  { handle: 'kairoslab',        igUserId: process.env.IG_ID_KAIROSLAB },
+  { handle: 'stylos.boutique_', igUserId: process.env.IG_ID_STYLOS   },
+  { handle: 'kairos.lab_',      igUserId: process.env.IG_ID_KAIROSLAB },
 ]
 
 function formatCount(n) {
