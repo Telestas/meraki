@@ -1,3 +1,13 @@
+fetch('followers.json')
+  .then(r=>r.json())
+  .then(data=>{
+    document.querySelectorAll('[data-ig-followers]').forEach(el=>{
+      const v=data[el.dataset.igFollowers]
+      if(v)el.textContent=v
+    })
+  })
+  .catch(()=>{})
+
 const nav=document.getElementById('nav')
 const burger=document.getElementById('burger')
 const navLinks=document.getElementById('navLinks')

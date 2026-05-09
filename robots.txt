@@ -1,2 +1,3 @@
 User-agent: *
 Allow: /
+Sitemap: https://merakiacreativa.com/sitemap.xml
