@@ -21,15 +21,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Setup pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v5
         with:
           version: 10
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: 20
           cache: pnpm
@@ -41,7 +41,7 @@ jobs:
         run: pnpm build
 
       - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v6
         with:
           path: ./out
 
@@ -89,7 +89,7 @@ jobs:
           TAG: ${{ github.ref_name }}
           JOB_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
-          MSG=$(printf '❌ *Fallo el despliegue de `%s`*\n\n[Ver job fallido](%s)' "${TAG}" "${JOB_URL}")
+          MSG=$(printf '❌ *\[Meraki Acreativa\] Fallo el despliegue de `%s`*\n\n[Ver job fallido](%s)' "${TAG}" "${JOB_URL}")
           curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
             -d "chat_id=${TELEGRAM_CHAT_ID}" \
             -d "message_thread_id=${TELEGRAM_THREAD_ID}" \
