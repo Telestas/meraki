@@ -81,6 +81,17 @@ main:focus {
   transform: translateY(0);
 }
 
+/* Portfolio case backgrounds */
+.portfolio-bg-rey {
+  background: linear-gradient(135deg, #1d003c 0%, #2b0055 50%, #09000f 100%);
+}
+.portfolio-bg-stylos {
+  background: linear-gradient(135deg, #110020 0%, #1e0035 100%);
+}
+.portfolio-bg-kairos {
+  background: linear-gradient(135deg, #180028 0%, #0f0016 100%);
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

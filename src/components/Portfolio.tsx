@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { motion, useReducedMotion } from 'framer-motion'
 
 const cases = [
@@ -7,22 +8,28 @@ const cases = [
     badge: 'Marca Personal',
     name: 'REY STONE',
     desc: 'Estrategia completa de marca personal',
-    gradient: 'linear-gradient(135deg, #1d003c 0%, #2b0055 50%, #09000f 100%)',
+    bgClass: 'portfolio-bg-rey',
     igUrl: 'https://www.instagram.com/reystone_oficial/',
+    logo: null,
+    logoAlt: 'Rey Stone',
   },
   {
     badge: 'Social Media',
     name: 'STYLOS BOUTIQUE',
     desc: 'Contenido viral de moda y lifestyle',
-    gradient: 'linear-gradient(135deg, #110020 0%, #1e0035 100%)',
+    bgClass: 'portfolio-bg-stylos',
     igUrl: 'https://www.instagram.com/stylos.boutique_/',
+    logo: '/images/stylos-logo.png',
+    logoAlt: 'Stylos Boutique',
   },
   {
     badge: 'Branding',
     name: 'KAIROS LAB',
     desc: 'Identidad y posicionamiento premium',
-    gradient: 'linear-gradient(135deg, #180028 0%, #0f0016 100%)',
+    bgClass: 'portfolio-bg-kairos',
     igUrl: 'https://www.instagram.com/kairos.lab_/',
+    logo: '/images/kairos-logo.png',
+    logoAlt: 'Kairos Lab',
   },
 ]
 
@@ -81,27 +88,39 @@ export default function Portfolio() {
               viewport={{ once: true, margin: '-60px' }}
               className="group relative aspect-[4/5] overflow-hidden cursor-pointer"
             >
-              {/* Background */}
-              <div
-                className="absolute inset-0 transition-transform duration-500 group-hover:scale-110"
-                style={{ background: c.gradient }}
-              />
+              {/* Background gradient via CSS class */}
+              <div className={`absolute inset-0 transition-transform duration-500 group-hover:scale-110 ${c.bgClass}`} />
 
-              {/* Overlay */}
-              <div className="absolute inset-0 bg-[rgba(6,0,15,0.95)] translate-y-full group-hover:translate-y-0 transition-transform duration-400 ease-out flex flex-col justify-end p-7">
+              {/* Logo centrado — visible por defecto, se oculta en hover */}
+              {c.logo && (
+                <div className="absolute inset-0 flex items-center justify-center z-[1] p-6 group-hover:opacity-0 transition-opacity duration-300">
+                  <div className="relative w-full max-w-[320px] aspect-video">
+                    <Image
+                      src={c.logo}
+                      alt={c.logoAlt}
+                      fill
+                      className="object-contain drop-shadow-[0_2px_20px_rgba(255,255,255,0.2)]"
+                      sizes="320px"
+                    />
+                  </div>
+                </div>
+              )}
+
+              {/* Hover overlay — sube desde abajo */}
+              <div className="absolute inset-0 bg-[rgba(6,0,15,0.95)] translate-y-full group-hover:translate-y-0 transition-transform duration-400 ease-out flex flex-col justify-end p-7 z-[2]">
                 <span className="font-syne text-[10px] font-bold tracking-[3px] uppercase text-[#7c2fe0] mb-2">
                   {c.badge}
                 </span>
                 <div className="font-bebas text-[32px] leading-none text-[#f2eeff] mb-2">{c.name}</div>
                 <p className="text-[13px] text-[#888899] mb-5 font-light">{c.desc}</p>
-                <span className="font-syne text-[11px] font-bold tracking-[2px] uppercase text-[#c084fc] group flex items-center gap-2">
+                <span className="font-syne text-[11px] font-bold tracking-[2px] uppercase text-[#c084fc] inline-flex items-center gap-2">
                   Ver en Instagram
                   <span className="inline-block transition-transform duration-300 group-hover:translate-x-1">→</span>
                 </span>
               </div>
 
-              {/* Default badge */}
-              <div className="absolute bottom-0 left-0 right-0 p-5 bg-gradient-to-t from-[rgba(6,0,15,0.9)] to-transparent group-hover:opacity-0 transition-opacity duration-300">
+              {/* Badge inferior por defecto */}
+              <div className="absolute bottom-0 left-0 right-0 p-5 bg-gradient-to-t from-[rgba(6,0,15,0.9)] to-transparent group-hover:opacity-0 transition-opacity duration-300 z-[2]">
                 <span className="font-syne text-[10px] font-bold tracking-[3px] uppercase text-[#7c2fe0] mb-1 block">
                   {c.badge}
                 </span>
