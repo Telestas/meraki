@@ -73,16 +73,12 @@ jobs:
           TELEGRAM_THREAD_ID: ${{ secrets.TELEGRAM_THREAD_ID }}
           TAG: ${{ github.ref_name }}
         run: |
+          MSG=$(printf '✅ *Meraki Acreativa desplegado*\n\n\U0001F3F7 Version: `%s`\n\U0001F310 https://merakiacreativa.com\n\n_Desplegado correctamente en GitHub Pages_' "${TAG}")
           curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
             -d "chat_id=${TELEGRAM_CHAT_ID}" \
             -d "message_thread_id=${TELEGRAM_THREAD_ID}" \
             -d "parse_mode=Markdown" \
-            --data-urlencode "text=✅ *Meraki Acreativa desplegado*
-
-🏷 Versión: \`${TAG}\`
-🌐 https://merakiacreativa.com
-
-_Desplegado correctamente en GitHub Pages_"
+            --data-urlencode "text=${MSG}"
 
       - name: Notify failure
         if: needs.build.result == 'failure' || needs.deploy.result == 'failure'
@@ -93,10 +89,9 @@ _Desplegado correctamente en GitHub Pages_"
           TAG: ${{ github.ref_name }}
           JOB_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
+          MSG=$(printf '❌ *Fallo el despliegue de `%s`*\n\n[Ver job fallido](%s)' "${TAG}" "${JOB_URL}")
           curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
             -d "chat_id=${TELEGRAM_CHAT_ID}" \
             -d "message_thread_id=${TELEGRAM_THREAD_ID}" \
             -d "parse_mode=Markdown" \
-            --data-urlencode "text=❌ *Fallo el despliegue de \`${TAG}\`*
-
-[Ver job fallido](${JOB_URL})"
+            --data-urlencode "text=${MSG}"
